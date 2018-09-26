@@ -4,7 +4,7 @@ import { shareLink, shareTitle, shareDesc, shareImg } from 'conf/weChatShare_con
  * 微信sdk初始化
  * @param {*} data 微信配置信息
  */
-const WeChat_Conf_init = (data) => {
+const WeChat_init = (data) => {
 	wx.config({
 		debug: false,
 		appId: data.appId,
@@ -46,4 +46,4 @@ const WeChat_Conf_init = (data) => {
 		});
 	});
 };
-export { WeChat_Conf_init };
+export { WeChat_init };

@@ -1,5 +1,5 @@
-import { WeChat_Conf_init } from './weChat_config';
-import { GetOpenIdByCode, WeChat_Conf } from '@api/weChat';
+import { WeChat_init } from './weChat_config';
+import { GetOpenIdByCode, WeChat_Conf_Init } from '@api/weChat';
 import { appId, shareLink } from 'conf/weChatShare_conf';
 
 class WeChat {
@@ -45,9 +45,16 @@ class WeChat {
 		}
 	}
 	async getOpenId() {
-		let code = await GetOpenIdByCode(this.getQueryString('code'), this.appId);
-		if (code) {
-			this.redirectUrl();
+		try {
+			let code = await GetOpenIdByCode(this.getQueryString('code'), this.appId);
+			console.log('------------------------------------');
+			console.log(code);
+			console.log('------------------------------------');
+			if (code) {
+				this.redirectUrl();
+			}
+		} catch (e) {
+			console.log(e);
 		}
 	}
 }
@@ -57,9 +64,13 @@ class WeChatConf extends WeChat {
 		super(props);
 	}
 	async init() {
-		this.hasCode();
-		let data = await WeChat_Conf();
-		WeChat_Conf_init(data);
+		try {
+			this.hasCode();
+			let data = await WeChat_Conf_Init();
+			WeChat_init(data);
+		} catch (e) {
+			console.log(e);
+		}
 	}
 }
 export { WeChat, WeChatConf };
