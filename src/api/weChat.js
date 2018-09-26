@@ -19,7 +19,6 @@ const GetOpenIdByCode = (code, state) => {
 		})
 			.then((res) => {
 				let { data, status } = res.data;
-				console.log(data, status);
 				if (status === 'ok') {
 					store.set(STORE_NAME, data);
 					resolve(0);

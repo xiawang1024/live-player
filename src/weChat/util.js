@@ -47,9 +47,6 @@ class WeChat {
 	async getOpenId() {
 		try {
 			let code = await GetOpenIdByCode(this.getQueryString('code'), this.appId);
-			console.log('------------------------------------');
-			console.log(code);
-			console.log('------------------------------------');
 			if (code) {
 				this.redirectUrl();
 			}
