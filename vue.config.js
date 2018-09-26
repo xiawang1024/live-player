@@ -9,6 +9,8 @@ module.exports = {
 		config.resolve.alias
 			.set('@', resolve('src'))
 			.set('assets', resolve('src/assets'))
-			.set('components', resolve('src/components'));
+			.set('components', resolve('src/components'))
+			.set('conf', resolve('src/config'))
+			.set('@api', resolve('src/api'));
 	}
 };

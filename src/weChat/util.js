@@ -1,8 +1,6 @@
-import wx from 'weixin-js-sdk';
-import axios from 'axios';
-import Qs from 'qs';
-import { WeChat_Conf_Url, GetOpenIdByCode_Url } from './conf';
-import { appId, shareLink, shareTitle, shareDesc, shareImg } from './share-conf';
+import { WeChat_Conf_init } from './weChat_config';
+import { GetOpenIdByCode, WeChat_Conf } from 'api/weChat';
+import { appId, shareLink } from 'conf/weChatShare_conf';
 
 class WeChat {
 	constructor() {
@@ -10,7 +8,7 @@ class WeChat {
 		this.appId = appId;
 		this.redirect_uri = shareLink;
 		this.response_type = 'code';
-		this.scope = 'snsapi_userinfo'; //snsapi_base 只获取openId ， snsapi_userinfo 获取用户信息;
+		this.scope = 'snsapi_userinfo'; //snsapi_base 只获取openId ，snsapi_userinfo 获取用户信息;
 		this.state = Date.parse(new Date());
 		this.weChat_Redirect = '#wechat_redirect';
 	}
@@ -46,29 +44,11 @@ class WeChat {
 			this.getOpenId();
 		}
 	}
-	getOpenId() {
-		axios({
-			method: 'post',
-			url: GetOpenIdByCode_Url,
-			data: Qs.stringify({ code: this.getQueryString('code'), cate: this.appId })
-		})
-			.then((res) => {
-				let data = res.data;
-				if (data.status == 'ok') {
-					this.setStorage('WXHNDTOPENID', JSON.stringify(data.data));
-				} else {
-					this.redirectUrl();
-				}
-			})
-			.catch(() => {
-				this.redirectUrl();
-			});
-	}
-	getStorage(name) {
-		return localStorage.getItem(name);
-	}
-	setStorage(name, value) {
-		return localStorage.setItem(name, value);
+	async getOpenId() {
+		let code = await GetOpenIdByCode(this.getQueryString('code'), this.appId);
+		if (code) {
+			this.redirectUrl();
+		}
 	}
 }
 
@@ -76,51 +56,10 @@ class WeChatConf extends WeChat {
 	constructor(props) {
 		super(props);
 	}
-	init() {
+	async init() {
 		this.hasCode();
-		axios.post(WeChat_Conf_Url, Qs.stringify({ url: window.location.href })).then((res) => {
-			let data = res.data;
-			wx.config({
-				debug: false,
-				appId: data.appId,
-				timestamp: data.timestamp,
-				nonceStr: data.nonceStr,
-				signature: data.signature,
-				jsApiList: [
-					'onMenuShareTimeline',
-					'onMenuShareAppMessage',
-					'chooseImage',
-					'uploadImage',
-					'previewImage',
-					'startRecord',
-					'playVoice',
-					'stopRecord',
-					'downloadVoice',
-					'uploadVoice',
-					'stopVoice',
-					'openLocation'
-				]
-			});
-			wx.ready(() => {
-				wx.onMenuShareTimeline({
-					title: shareTitle,
-					link: shareLink,
-					imgUrl: shareImg,
-					success: function() {},
-					cancel: function() {}
-				});
-				wx.onMenuShareAppMessage({
-					title: shareTitle,
-					link: shareLink,
-					imgUrl: shareImg,
-					desc: shareDesc,
-					type: '',
-					dataUrl: '',
-					success: function() {},
-					cancel: function() {}
-				});
-			});
-		});
+		let data = await WeChat_Conf();
+		WeChat_Conf_init(data);
 	}
 }
 export { WeChat, WeChatConf };

@@ -1,22 +1,51 @@
 import axios from 'axios';
 import { Qs } from 'qs';
-import { resolve } from 'url';
+import store from 'store';
+
+import STORE_NAME from 'conf/store_conf';
+import { WeChat_Conf_Url, GetOpenIdByCode_Url } from 'conf/weChat_conf';
 /**
  * 通过code 获取openId
  * @param {*} url GetOpenIdByCode_Url
  * @param {*} code code
  * @param {*} cate 附加参数 默认当前公众号appId
  */
-const GetOpenIdByCode = (url, code, cate) => {
+const GetOpenIdByCode = (code, cate) => {
 	return new Promise((resolve, reject) => {
 		axios({
 			method: 'post',
-			url,
+			url: GetOpenIdByCode_Url,
 			data: Qs.stringify({ code, cate })
-		}).then((res) => {
-			let { data, status } = res.data.data;
-		});
+		})
+			.then((res) => {
+				let { data, status } = res.data.data;
+				if (status === 'ok') {
+					store.set(STORE_NAME, data);
+					resolve(0);
+				} else {
+					reject(1);
+				}
+			})
+			.catch((err) => {
+				reject(1);
+				console.log(err);
+			});
 	});
 };
 
-export { GetOpenIdByCode };
+const WeChat_Conf = () => {
+	return new Promise((resolve, reject) => {
+		axios
+			.post(WeChat_Conf_Url, Qs.stringify({ url: window.location.href }))
+			.then((res) => {
+				let data = res.data;
+				resolve(data);
+			})
+			.catch((err) => {
+				console.log(err);
+				reject(1);
+			});
+	});
+};
+
+export { GetOpenIdByCode, WeChat_Conf };
