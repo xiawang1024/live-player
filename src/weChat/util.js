@@ -1,5 +1,5 @@
 import { WeChat_Conf_init } from './weChat_config';
-import { GetOpenIdByCode, WeChat_Conf } from 'api/weChat';
+import { GetOpenIdByCode, WeChat_Conf } from '@api/weChat';
 import { appId, shareLink } from 'conf/weChatShare_conf';
 
 class WeChat {

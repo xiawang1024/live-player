@@ -11,6 +11,8 @@ module.exports = {
 			.set('assets', resolve('src/assets'))
 			.set('components', resolve('src/components'))
 			.set('conf', resolve('src/config'))
-			.set('@api', resolve('src/api'));
+			.set('weChat', resolve('src/weChat'))
+			.set('@api', resolve('src/api'))
+			.set('common', resolve('src/common'));
 	}
 };
