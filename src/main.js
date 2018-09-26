@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
 /**
- * 微信相关：sdk配置
+ * 初始化加载
  */
-import 'weChat/index';
+import './init/index';
 
 Vue.config.productionTip = false;
 
