@@ -99,9 +99,9 @@
         }
         ctx.quadraticCurveTo(controlPointR.x, controlPointR.y, headPointR.x, headPointR.y)
 
-        ctx.fillStyle = 'rgb(170,170,170)'
+        ctx.fillStyle = '#0081dc'
         ctx.fill()
-        ctx.strokeStyle = 'rgb(153,153,153)'
+        ctx.strokeStyle = '#eee'
         ctx.stroke()
         ctx.restore()
       },
@@ -138,6 +138,6 @@
   }
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="scss">
 
 </style>

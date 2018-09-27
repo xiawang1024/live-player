@@ -8,10 +8,7 @@
           </ul>
         </slot>
       </div>
-      <slot name="pullup"
-            :pullUpLoad="pullUpLoad"
-            :isPullUpLoad="isPullUpLoad"
-      >
+      <slot name="pullup" :pullUpLoad="pullUpLoad" :isPullUpLoad="isPullUpLoad">
         <div class="pullup-wrapper" v-if="pullUpLoad">
           <div class="before-trigger" v-if="!isPullUpLoad">
             <span>{{pullUpTxt}}</span>
@@ -22,13 +19,7 @@
         </div>
       </slot>
     </div>
-    <slot name="pulldown"
-          :pullDownRefresh="pullDownRefresh"
-          :pullDownStyle="pullDownStyle"
-          :beforePullDown="beforePullDown"
-          :isPullingDown="isPullingDown"
-          :bubbleY="bubbleY"
-    >
+    <slot name="pulldown" :pullDownRefresh="pullDownRefresh" :pullDownStyle="pullDownStyle" :beforePullDown="beforePullDown" :isPullingDown="isPullingDown" :bubbleY="bubbleY">
       <div ref="pulldown" class="pulldown-wrapper" :style="pullDownStyle" v-if="pullDownRefresh">
         <div class="before-trigger" v-if="beforePullDown">
           <bubble :y="bubbleY"></bubble>
@@ -46,9 +37,9 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
-  import Loading from 'common/loading/loading'
-  import Bubble from 'common/bubble/bubble'
-  import { getRect } from 'base/js/dom'
+  import Loading from 'base/loading/loading'
+  import Bubble from 'base/bubble/bubble'
+  import { getRect } from 'common/js/dom'
   const COMPONENT_NAME = 'scroll'
   const DIRECTION_H = 'horizontal'
   const DIRECTION_V = 'vertical'
@@ -276,42 +267,55 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-  .list-wrapper
-    position: absolute
-    left: 0
-    top: 0
-    right: 0
-    bottom: 0
-    overflow: hidden
-    background: #fff
-    .scroll-content
-      position: relative
-      z-index: 1
-    .list-content
-      position: relative
-      z-index: 10
-      background: #fff
-      .list-item
-        height: 60px
-        line-height: 60px
-        font-size: 18px
-        padding-left: 20px
-        border-bottom: 1px solid #e5e5e5
-  .pulldown-wrapper
-    position: absolute
-    width: 100%
-    left: 0
-    display: flex
-    justify-content center
-    align-items center
-    transition: all
-    .after-trigger
-      margin-top: 10px
-  .pullup-wrapper
-    width: 100%
-    display: flex
-    justify-content center
-    align-items center
-    padding: 30px 0 30px
+<style lang="scss" scoped>
+.list-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  background: #fff;
+
+  .scroll-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .list-content {
+    position: relative;
+    z-index: 10;
+    background: #fff;
+
+    .list-item {
+      height: 60px;
+      line-height: 60px;
+      font-size: 18px;
+      padding-left: 20px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+  }
+}
+
+.pulldown-wrapper {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all;
+
+  .after-trigger {
+    margin-top: 10px;
+  }
+}
+
+.pullup-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 30px;
+}
 </style>

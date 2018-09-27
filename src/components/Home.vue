@@ -1,9 +1,9 @@
 <template>
-  <div class="hello">
-    <h1 @click="successTips">{{ msg }}</h1>
-    <simplert :useRadius="true" :useIcon="true" ref="simplert">
-    </simplert>
-  </div>
+	<div class="hello">
+		<h1 @click="successTips">{{ msg }}</h1>
+		<simplert :useRadius="true" :useIcon="true" ref="simplert">
+		</simplert>
+	</div>
 </template>
 
 <script>
