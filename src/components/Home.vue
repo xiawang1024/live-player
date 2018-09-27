@@ -3,15 +3,24 @@
 		<h1 @click="successTips">{{ msg }}</h1>
 		<simplert :useRadius="true" :useIcon="true" ref="simplert">
 		</simplert>
+		<live-player :src='src' :poster='poster'></live-player>
 	</div>
 </template>
 
 <script>
 import Simplert from 'vue2-simplert'
+import LivePlayer from 'base/livePlayer/index'
 export default {
   name: 'HelloWorld',
   components:{
-    Simplert
+	Simplert,
+	LivePlayer
+  },
+  data() {
+	  return {
+		  src:'http://ivi.bupt.edu.cn/hls/chchd.m3u8',
+		  poster:'https://a.weixin.hndt.com/h5/1066/live/livePost.jpg'
+	  }
   },
   props: {
     msg: String
