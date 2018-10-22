@@ -1,29 +1,28 @@
 <template>
-	<div class="hello">
-		<h1 @click="successTips">{{ msg }}</h1>
-		<simplert :useRadius="true" :useIcon="true" ref="simplert">
-		</simplert>
-		<live-player :src='src' :poster='poster'></live-player>
-	</div>
+  <div class="home">
+    <simplert :useRadius="true" :useIcon="true" ref="simplert">
+    </simplert>
+    <live-player :src='src' :poster='poster'></live-player>
+    <comment></comment>
+  </div>
 </template>
 
 <script>
 import Simplert from 'vue2-simplert'
 import LivePlayer from 'base/livePlayer/index'
+import Comment from 'base/comment/index'
 export default {
-  name: 'HelloWorld',
+  name: 'home',
   components:{
-	Simplert,
-	LivePlayer
+    Simplert,
+    LivePlayer,
+    Comment
   },
   data() {
 	  return {
 		  src:'http://ivi.bupt.edu.cn/hls/chchd.m3u8',
 		  poster:'https://a.weixin.hndt.com/h5/1066/live/livePost.jpg'
 	  }
-  },
-  props: {
-    msg: String
   },
   methods:{
     successTips() {
@@ -41,18 +40,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
